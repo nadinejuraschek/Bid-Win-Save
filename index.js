@@ -35,7 +35,7 @@ function start() {
         if(answer.PoB.toUpperCase()=="POST") {
             postAuction();
         } else {
-            // bidAuction();
+            bidAuction();
         };
     });
 };
@@ -76,6 +76,51 @@ function postAuction() {
     });
 };
 
-// function bidAuction() {
-
-// };
+function bidAuction() {
+    connection.query("SELECT * FROM auctions", function(err, res) {
+        console.table(res);
+        inquirer.prompt({
+            name: "choice",
+            type: "rawlist",
+            choices: function(value){
+                var choiceArray = [];
+                for (var i = 0; i < res.length; i++) {
+                    choiceArray.push(res[i].itemname);
+                } return choiceArray;
+            },
+            message: "Which item would you like to place a bid on?"
+        }).then(function(answer) {
+            for (var i=0; i<res.length; i++) {
+                if(res[i].itemname == answer.choice) {
+                    var chosenItem = res[i];
+                    inquirer.prompt({
+                        name: "bid",
+                        type: "input",
+                        message: "How high would you like to bid?",
+                        validate: function(value) {
+                            if (isNaN(value) == false) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    }).then(function(answer) {
+                        if (chosenItem.highestBid < parseInt(answer.bid)){
+                            connection.query("UPDATE auctions SET ? WHERE ?", [{
+                                highestBid: answer.bid
+                            }, {
+                                id: chosenItem.id
+                            }], function(err, res){
+                                console.log("Bid successfullly placed!");
+                                start();
+                            });
+                        } else {
+                            console.log("Sorry, your bid was too low. Place a new bid!");
+                            start();
+                        };
+                    });
+                };
+            };
+        });
+    });
+};
