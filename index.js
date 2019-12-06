@@ -19,6 +19,7 @@ const connection = mysql.createConnection({
 
 connection.connect(function(err) {
     console.log("Connected as ID: " + connection.threadId);
+    start();
 });
 
 /*************************************
@@ -32,16 +33,48 @@ function start() {
         choices: ["POST", "BID"]
     }).then(function(answer) {
         if(answer.PoB.toUpperCase()=="POST") {
-            // postAuction();
+            postAuction();
         } else {
             // bidAuction();
         };
     });
 };
 
-// function postAuction() {
-
-// };
+function postAuction() {
+    inquirer.prompt(
+    {
+        name: "item",
+        type: "input",
+        message: "What is the item you wish to submit?"
+    },
+    {
+        name: "category",
+        type: "input",
+        message: "Which category would you place it in?"
+    },
+    {
+        name: "startingBid",
+        type: "input",
+        message: "What is your starting bid?",
+        validate: function(value) {
+            if (isNaN(value) == false) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }).then(function(answer) {
+        connection.query("INSERT INTO auctions SET ?", {
+            itemname: answer.item,
+            category: answer.category,
+            startingBid: answer.startingBid,
+            highestBid:  answer.startingBid 
+        }, function(err, res) {
+            console.log("Let the bidding begin!"); 
+            start();
+        });
+    });
+};
 
 // function bidAuction() {
 
