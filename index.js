@@ -41,7 +41,7 @@ function start() {
 };
 
 function postAuction() {
-    inquirer.prompt(
+    inquirer.prompt([
     {
         name: "item",
         type: "input",
@@ -63,7 +63,7 @@ function postAuction() {
                 return false;
             }
         }
-    }).then(function(answer) {
+    }]).then(function(answer) {
         connection.query("INSERT INTO auctions SET ?", {
             itemname: answer.item,
             category: answer.category,
