@@ -20,3 +20,29 @@ const connection = mysql.createConnection({
 connection.connect(function(err) {
     console.log("Connected as ID: " + connection.threadId);
 });
+
+/*************************************
+FUNCTIONS
+*************************************/
+function start() {
+    inquirer.prompt({
+        name: "PoB",
+        type: "rawlist",
+        message: "Would you like to [POST] an auction or [BID] on an auction?",
+        choices: ["POST", "BID"]
+    }).then(function(answer) {
+        if(answer.PoB.toUpperCase()=="POST") {
+            // postAuction();
+        } else {
+            // bidAuction();
+        };
+    });
+};
+
+// function postAuction() {
+
+// };
+
+// function bidAuction() {
+
+// };
