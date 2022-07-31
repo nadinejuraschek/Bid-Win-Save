@@ -4,22 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nadinejuraschek/Bid-Win-Save.git"
   },
-  "author": "Nadine Juraschek",
+  "author": "Nadine Pesso",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/nadinejuraschek/Bid-Win-Save/issues"
   },
   "homepage": "https://github.com/nadinejuraschek/Bid-Win-Save#readme",
   "dependencies": {
-    "console.table": "^0.10.0",
-    "dotenv": "^8.2.0",
+    "chalk": "^5.1.0",
+    "dotenv": "^16.0.3",
     "inquirer": "^7.0.0",
-    "mysql": "^2.17.1"
-  }
+    "mysql2": "^2.3.3"
+  },
+  "type": "module"
 }
