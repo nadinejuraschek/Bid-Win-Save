@@ -12,7 +12,7 @@ export const postAuction = () => {
       startingBid: answer.startingBid,
       highestBid:  answer.startingBid,
     }).then(() => {
-      console.log(chalk.green(`${itemname} was added to the list of auctionable items. Let the bidding begin!`));
+      console.log(chalk.green(`${answer.item} was added to the list of auctionable items. Let the bidding begin!`));
       runApp();
     }).catch(err => {
       console.log(chalk.red("Could not create new auction item. Error: ", err));
